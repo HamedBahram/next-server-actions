@@ -1,6 +1,6 @@
 'use client'
 
-import { useFormState } from 'react-dom'
+import { useFormState, useFormStatus } from 'react-dom'
 import { addEntry } from './_actions'
 
 export default function Form() {
@@ -15,12 +15,25 @@ export default function Form() {
       >
         <input className='rounded-lg' name='name' placeholder='name' />
         <input className='rounded-lg' name='message' placeholder='message' />
-        <button className='rounded-lg bg-black py-2 text-white'>Submit</button>
+        <SubmitButton />
       </form>
 
       <div className='flex-1 rounded-lg bg-cyan-600 p-8 text-white'>
         <pre>{JSON.stringify(state, null, 2)}</pre>
       </div>
     </section>
+  )
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus()
+
+  return (
+    <button
+      disabled={pending}
+      className='rounded-lg bg-black py-2 text-white disabled:cursor-not-allowed disabled:opacity-50'
+    >
+      {pending ? 'Submitting...' : 'Submit'}
+    </button>
   )
 }

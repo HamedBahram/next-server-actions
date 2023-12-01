@@ -8,6 +8,8 @@ export async function addEntry(state: any, data: FormData) {
     message: data.get('message')
   })
 
+  await new Promise(resolve => setTimeout(resolve, 1000))
+
   if (result.success) {
     return { data: result.data }
   }
